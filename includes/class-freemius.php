@@ -591,7 +591,7 @@
 
                 $skips_count = 0;
 
-                $sites       = $this->get_sites();
+                $sites       = self::get_sites();
                 $sites_count = count( $sites );
 
                 $blog_id_2_install_map = array();
@@ -1045,7 +1045,7 @@
          * @since  2.0.0
          */
         private static function migrate_accounts_to_network() {
-            $sites             = $this->get_sites();
+            $sites             = self::get_sites();
             $sites_count       = count( $sites );
             $connection_status = array();
             $plugin_slugs      = array();
@@ -3782,7 +3782,7 @@
                     // Clear accounts data.
                     self::$_accounts->clear( null, true );
                 } else {
-                    $sites = $this->get_sites();
+                    $sites = self::get_sites();
                     foreach ( $sites as $site ) {
                         $blog_id = self::get_site_blog_id( $site );
                         self::$_accounts->clear( $blog_id, true );
@@ -3803,7 +3803,7 @@
                 } else {
                     $current_blog_id = get_current_blog_id();
 
-                    $sites = $this->get_sites();
+                    $sites = self::get_sites();
                     foreach ( $sites as $site ) {
                         switch_to_blog( self::get_site_blog_id( $site ) );
 
@@ -3889,7 +3889,7 @@
                     }
                 }
             } else {
-                $sites = $this->get_sites();
+                $sites = self::get_sites();
 
                 foreach ( $sites as $site ) {
                     $blog_id = self::get_site_blog_id( $site );
@@ -8218,7 +8218,7 @@
                 $blog_2_install_map = array();
                 $site_ids           = array();
 
-                $all_sites = $this->get_sites();
+                $all_sites = Freemius::get_sites();
 
                 foreach ( $all_sites as $site ) {
                     $blog_id = Freemius::get_site_blog_id( $site );
@@ -8360,7 +8360,7 @@
                     $filtered_sites = array();
 
                     if ( empty( $sites ) ) {
-                        $all_sites = $this->get_sites();
+                        $all_sites = self::get_sites();
 
                         foreach ( $all_sites as $site ) {
                             $sites[] = array( 'blog_id' => self::get_site_blog_id( $site ) );
@@ -8519,7 +8519,7 @@
          */
         function get_sites_for_network_level_optin() {
             $sites     = array();
-            $all_sites = $this->get_sites();
+            $all_sites = self::get_sites();
 
             foreach ( $all_sites as $site ) {
                 $blog_id = self::get_site_blog_id( $site );
@@ -8641,7 +8641,7 @@
             $this->clear_sync_cron( true );
             $this->clear_install_sync_cron( true );
 
-            $sites = $this->get_sites();
+            $sites = self::get_sites();
 
             $install_ids = array();
             foreach ( $sites as $site ) {
@@ -8746,7 +8746,7 @@
                 }
 
                 if ( ! empty( $storage_keys_for_removal ) ) {
-                    $sites = $this->get_sites();
+                    $sites = self::get_sites();
 
                     foreach ( $sites as $site ) {
                         $blog_id = self::get_site_blog_id( $site );
@@ -8935,7 +8935,7 @@
                  */
                 $has_delegated_site = false;
 
-                $sites = $this->get_sites();
+                $sites = self::get_sites();
                 foreach ( $sites as $wp_site ) {
                     $blog_id = self::get_site_blog_id( $wp_site );
 
@@ -9619,7 +9619,7 @@
 
             $installs_data = array();
 
-            $sites = $this->get_sites();
+            $sites = self::get_sites();
 
             $subsite_data_for_api_by_install_id      = array();
             $install_url_by_install_id               = array();
@@ -12140,7 +12140,7 @@
             }
 
             $plan_ids = array();
-            $sites    = $this->get_sites();
+            $sites    = self::get_sites();
             foreach ( $sites as $site ) {
                 $blog_id = self::get_site_blog_id( $site );
                 $install = $this->get_install_by_blog_id( $blog_id );
@@ -12177,7 +12177,7 @@
             }
 
             $license_ids = array();
-            $sites       = $this->get_sites();
+            $sites       = self::get_sites();
             foreach ( $sites as $site ) {
                 $blog_id = self::get_site_blog_id( $site );
                 $install = $this->get_install_by_blog_id( $blog_id );
@@ -12503,7 +12503,7 @@
                 return false;
             }
 
-            $sites = $this->get_sites();
+            $sites = self::get_sites();
 
             if ( $this->_license->total_activations() < ( count( $sites ) - 1 ) ) {
                 // There are more sites than the number of activations, so license cannot be network activated.
@@ -12587,7 +12587,7 @@
          * }
          */
         private function can_activate_license_on_network( FS_Plugin_License $license ) {
-            $sites = $this->get_sites();
+            $sites = self::get_sites();
 
             $production_count = 0;
             $localhost_count  = 0;
@@ -13041,7 +13041,7 @@
                                 $is_network_level &&
                                 ( ! $was_addon_network_activated || $network_delegated_connection )
                             ) {
-                                $sites = $this->get_sites();
+                                $sites = self::get_sites();
 
                                 /**
                                  * If in network admin area and the add-on was not network-activated or network-activated
@@ -13214,7 +13214,7 @@
             }
 
             $subscriptions_to_keep_by_license_id_map = array();
-            $sites                                   = $this->get_sites();
+            $sites                                   = self::get_sites();
             foreach ( $sites as $site ) {
                 $blog_id = self::get_site_blog_id( $site );
                 $install = $this->get_install_by_blog_id( $blog_id );
@@ -14388,7 +14388,7 @@
                             }
                         }
 
-                        $all_sites        = $this->get_sites();
+                        $all_sites        = self::get_sites();
                         $pending_blog_ids = array();
 
                         /**
@@ -15821,7 +15821,7 @@
          *
          * @return array Active & public sites collection.
          */
-         function get_sites( $limit = 1000, $offset = 0 ) {
+        static function get_sites( $limit = 1000, $offset = 0 ) {
             if ( ! is_multisite() ) {
                 return array();
             }
@@ -15830,7 +15830,7 @@
              * Allow developers to bypass the check on all network sites.
              * @return array|null
              */
-            $sites = apply_filters('fs_get_sites', null, $this->get_plugin_basename());
+            $sites = apply_filters('fs_get_sites', null);
 
             if (!is_null($sites)) {
                 return $sites;
@@ -15900,7 +15900,7 @@
          * }
          */
         private function get_address_to_blog_map() {
-            $sites = $this->get_sites();
+            $sites = self::get_sites();
 
             // Map site addresses to their blog IDs.
             $address_to_blog_map = array();
@@ -15925,7 +15925,7 @@
          * }
          */
         function get_blog_install_map() {
-            $sites = $this->get_sites();
+            $sites = self::get_sites();
 
             // Map site blog ID to its install.
             $install_map = array();
@@ -15953,7 +15953,7 @@
         private function get_blog_ids( $is_delegated = null ) {
             $blog_ids = array();
 
-            $sites = $this->get_sites();
+            $sites = self::get_sites();
             foreach ( $sites as $site ) {
                 $blog_id = self::get_site_blog_id( $site );
 
@@ -16000,7 +16000,7 @@
                     self::get_all_sites( WP_FS__MODULE_TYPE_THEME )
                 );
             } else {
-                $sites = $this->get_sites();
+                $sites = self::get_sites();
 
                 $installs = array();
                 foreach ( $sites as $site ) {
@@ -16037,7 +16037,7 @@
          * }
          */
         function find_first_install() {
-            $sites = $this->get_sites();
+            $sites = self::get_sites();
 
             foreach ( $sites as $site ) {
                 $blog_id = self::get_site_blog_id( $site );
