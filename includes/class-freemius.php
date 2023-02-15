@@ -15830,7 +15830,7 @@
              * Allow developers to bypass the check on all network sites.
              * @return array|null
              */
-            $sites = apply_filters('fs_get_sites', null, $this->_plugin_basename);
+            $sites = apply_filters('fs_get_sites', null, self::get_instance()->get_plugin_basename());
             
             if (!is_null($sites)) {
                 return $sites;   
