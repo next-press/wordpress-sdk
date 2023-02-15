@@ -15825,6 +15825,16 @@
             if ( ! is_multisite() ) {
                 return array();
             }
+            
+            /**
+             * Allow developers to bypass the check on all network sites.
+             * @return array|null
+             */
+            $sites = apply_filters('fs_get_sites', null);
+            
+            if (!is_null($sites)) {
+                return $sites;   
+            }
 
             /**
              * For consistency with get_blog_list() which only return active public sites.
